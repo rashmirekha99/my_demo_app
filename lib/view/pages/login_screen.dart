@@ -4,6 +4,7 @@ import 'package:my_demo_app/constants/app_style_sizes.dart';
 import 'package:my_demo_app/constants/app_texts.dart';
 import 'package:my_demo_app/routes/route_names.dart';
 import 'package:my_demo_app/theme/color_palette.dart';
+import 'package:my_demo_app/utils/validator.dart';
 import 'package:my_demo_app/view/dialogs/exit_app_dialog.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
@@ -18,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     super.dispose();
@@ -49,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              key: formKey,
+              key: _formKey,
               child: Column(
                 spacing: 25,
                 children: [
@@ -68,17 +69,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   AuthField(
                     hintText: 'User Name',
                     controller: usernameController,
+                    validator: (value) => Validator.emptyValidation(value),
                   ),
 
                   AuthField(
                     hintText: 'Password',
                     controller: passwordController,
                     isObscureTExt: true,
+                    validator: (pswrd) => Validator.emptyValidation(pswrd),
                   ),
 
                   AuthButton(
                     onpress: () {
-                      if (formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         Navigator.popAndPushNamed(
                           context,
                           RouteNames.homeScreen,

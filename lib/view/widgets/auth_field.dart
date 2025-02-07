@@ -6,12 +6,14 @@ class AuthField extends StatelessWidget {
   final TextEditingController controller;
   final bool isObscureTExt;
   final bool isPasswordVisible;
+  final String? Function(String?)? validator;
   const AuthField({
     super.key,
     required this.hintText,
     required this.controller,
     this.isObscureTExt = false,
     this.isPasswordVisible = false,
+    required this.validator,
   });
 
   @override
@@ -27,12 +29,13 @@ class AuthField extends StatelessWidget {
         //   child: IconButton(onPressed: null, icon: Icon(Icons.remove_red_eye)),
         // ),
       ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "$hintText is Missing";
-        }
-        return null;
-      },
+      validator: validator,
+      // validator: (value) {
+      //   if (value!.isEmpty) {
+      //     return "$hintText is Missing";
+      //   }
+      //   return null;
+      // },
     );
   }
 }
