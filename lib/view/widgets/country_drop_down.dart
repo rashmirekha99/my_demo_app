@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_demo_app/constants/app_styles.dart';
 import 'package:my_demo_app/providers/form_provider.dart';
 import 'package:my_demo_app/services/api_services.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class CountryDropDown extends StatelessWidget {
           return SnackBar(content: Text("Error: ${snapshot.error}"));
         } else if (snapshot.hasData) {
           return DropdownMenu(
+            inputDecorationTheme: AppStyles.dropDownFieldStyle,
             label: Text('Select a Country'),
             width: screenWidth,
             enableFilter: true,
