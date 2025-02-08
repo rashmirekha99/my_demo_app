@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_demo_app/constants/gender_enum.dart';
 
 class FormProvider extends ChangeNotifier {
-  String _gender = '';
+  Gender _gender = Gender.male;
   String _country = '';
-  String get gender => _gender;
+  Gender get gender => _gender;
   String get country => _country;
-  void setGender(String gender) {
+  void setGender(Gender gender) {
     if (gender != _gender) {
       _gender = gender;
       notifyListeners();
     }
   }
-
   void setCountry(String country) {
     if (country != _country) {
       _country = country;

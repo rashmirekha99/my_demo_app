@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:my_demo_app/constants/gender_enum.dart';
 import 'package:my_demo_app/providers/form_provider.dart';
 import 'package:provider/provider.dart';
 
 class RadioButtonSection extends StatelessWidget {
-  RadioButtonSection({super.key});
-
-  final List<String> radioOptions = ['Male', 'Female'];
+  const RadioButtonSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Selector<FormProvider, String>(
+    return Selector<FormProvider, Gender>(
       selector: (context, provider) => provider.gender,
-      builder: (context, gender, child) {
+      builder: (context, genderProviderValue, child) {
         return Row(
           children:
-              radioOptions
+              Gender.values
                   .map(
-                    (option) => Flexible(
+                    (gender) => Flexible(
                       flex: 1,
                       child: RadioListTile(
-                        title: Text(option),
-                        value: option,
-                        groupValue: gender,
+                        title: Text(gender.name.toString().toUpperCase()),
+                        value: gender,
+                        groupValue: genderProviderValue,
                         onChanged: (value) {
                           if (value != null) {
                             context.read<FormProvider>().setGender(value);
