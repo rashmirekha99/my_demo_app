@@ -19,7 +19,7 @@ class CountryDropDown extends StatelessWidget {
       future: fetchCountries(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator.adaptive();
+          return defaultDropDown(screenWidth, 'Loading...');
         } else if (snapshot.hasError) {
           return SnackBar(content: Text("Error: ${snapshot.error}"));
         } else if (snapshot.hasData) {
@@ -42,20 +42,21 @@ class CountryDropDown extends StatelessWidget {
                     .toList(),
           );
         } else {
-          return DropdownMenu(
-            label: Text('Select a Country'),
-            width: screenWidth,
-            enableFilter: true,
-            dropdownMenuEntries: [
-              DropdownMenuEntry(
-                enabled: false,
-                value: 'No data',
-                label: 'No data',
-              ),
-            ],
-          );
+          return defaultDropDown(screenWidth, 'No Data');
         }
       },
+    );
+  }
+
+  Widget defaultDropDown(screenWidth, status) {
+    return DropdownMenu(
+      inputDecorationTheme: AppStyles.dropDownFieldStyle,
+      label: Text('Select a Country'),
+      width: screenWidth,
+      enableFilter: true,
+      dropdownMenuEntries: [
+        DropdownMenuEntry(enabled: false, value: status, label: status),
+      ],
     );
   }
 }

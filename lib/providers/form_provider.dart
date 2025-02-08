@@ -6,12 +6,15 @@ class FormProvider extends ChangeNotifier {
   String get gender => _gender;
   String get country => _country;
   void setGender(String gender) {
-    _gender = gender;
-    notifyListeners();
+    if (gender != _gender) {
+      _gender = gender;
+      notifyListeners();
+    }
   }
 
   void setCountry(String country) {
-    _country = country;
-    notifyListeners();
+    if (country != _country) {
+      _country = country;
+    }
   }
 }

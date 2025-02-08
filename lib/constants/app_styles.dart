@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_demo_app/theme/color_palette.dart';
 
 class AppStyles {
+  //textform field styles
   static const InputDecoration textFormFieldStyle = InputDecoration(
     border: OutlineInputBorder(
       borderSide: BorderSide(
@@ -30,6 +31,7 @@ class AppStyles {
       borderSide: BorderSide(color: ColorPalette.textFieldColor, width: 3),
     ),
   );
+  //drop down styles
   static const InputDecorationTheme dropDownFieldStyle = InputDecorationTheme(
     border: OutlineInputBorder(
       borderSide: BorderSide(

@@ -9,26 +9,30 @@ class RadioButtonSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children:
-          radioOptions
-              .map(
-                (option) => Flexible(
-                  flex: 1,
-                  child: RadioListTile(
-                    title: Text(option),
-                    value: option,
-                    groupValue: '',
-                    // context.watch<FormProvider>().gender,
-                    onChanged: (value) {
-                      if (value != null) {
-                        //context.read<FormProvider>().setGender(value);
-                      }
-                    },
-                  ),
-                ),
-              )
-              .toList(),
+    return Selector<FormProvider, String>(
+      selector: (context, provider) => provider.gender,
+      builder: (context, gender, child) {
+        return Row(
+          children:
+              radioOptions
+                  .map(
+                    (option) => Flexible(
+                      flex: 1,
+                      child: RadioListTile(
+                        title: Text(option),
+                        value: option,
+                        groupValue: gender,
+                        onChanged: (value) {
+                          if (value != null) {
+                            context.read<FormProvider>().setGender(value);
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                  .toList(),
+        );
+      },
     );
   }
 }
