@@ -19,7 +19,7 @@ class CountryDropDown extends StatelessWidget {
       future: fetchCountries(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return defaultDropDown(screenWidth, 'Loading...');
+          return _defaultDropDown(screenWidth, 'Loading...');
         } else if (snapshot.hasError) {
           return SnackBar(content: Text("Error: ${snapshot.error}"));
         } else if (snapshot.hasData) {
@@ -42,13 +42,13 @@ class CountryDropDown extends StatelessWidget {
                     .toList(),
           );
         } else {
-          return defaultDropDown(screenWidth, 'No Data');
+          return _defaultDropDown(screenWidth, 'No Data');
         }
       },
     );
   }
 
-  Widget defaultDropDown(screenWidth, status) {
+  Widget _defaultDropDown(screenWidth, status) {
     return DropdownMenu(
       inputDecorationTheme: AppStyles.dropDownFieldStyle,
       label: Text('Select a Country'),

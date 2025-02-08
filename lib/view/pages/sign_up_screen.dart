@@ -6,6 +6,7 @@ import 'package:my_demo_app/theme/color_palette.dart';
 import 'package:my_demo_app/utils/validator.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
+import 'package:my_demo_app/view/widgets/check_box.dart';
 import 'package:my_demo_app/view/widgets/country_drop_down.dart';
 import 'package:my_demo_app/view/widgets/radio_button_section.dart';
 import 'package:phone_form_field/phone_form_field.dart';
@@ -18,14 +19,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNAmeController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNAmeController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  bool checkValue = false;
 
   @override
   void dispose() {
@@ -35,11 +34,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -56,7 +50,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppStyleSizes.screenHorizontalPAdding,
               ),
-              child: Form(
+              child:  _form 
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget get _form=>Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _formKey,
                 child: Column(
@@ -131,18 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             confirmPwrd,
                           ),
                     ),
-                    CheckboxListTile(
-                      value: checkValue,
-                      onChanged: (value) {
-                        if (value != null) {
-                          setState(() {
-                            checkValue = value;
-                          });
-                        }
-                      },
-                      title: Text('Agree with Terms & Conditions'),
-                      controlAffinity: ListTileControlAffinity.leading,
-                    ),
+                    AppCheckBox(),
                     AuthButton(
                       onpress: () {
                         if (_formKey.currentState!.validate()) {
@@ -156,11 +147,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+              );
+          
 }
