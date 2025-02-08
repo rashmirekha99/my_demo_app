@@ -6,6 +6,8 @@ import 'package:my_demo_app/theme/color_palette.dart';
 import 'package:my_demo_app/utils/validator.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
+import 'package:my_demo_app/view/widgets/drop_down.dart';
+import 'package:my_demo_app/view/widgets/radio_button_section.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -22,8 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  List<String> radioOptions = ['Male', 'Female'];
-  String? currentRadio;
+ 
   bool checkValue = false;
 
   @override
@@ -33,17 +34,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     lastNAmeController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    currentRadio = radioOptions[0];
+    
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -79,7 +82,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: lastNAmeController,
                       validator: (lname) => Validator.emptyValidation(lname),
                     ),
-                    radioButtons,
+                    RadioButtonSection(),
+
                     PhoneFormField(
                       initialValue: PhoneNumber.parse(
                         '+94',
@@ -111,6 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: emailController,
                       validator: (email) => Validator.emailValidation(email),
                     ),
+                    DropDown(),
                     AuthField(
                       hintText: 'Password',
                       controller: passwordController,
@@ -159,39 +164,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-  Widget get radioButtons => Row(
-    children: [
-      Flexible(
-        flex: 1,
-        child: RadioListTile<String>(
-          title: Text(radioOptions[0]),
-          value: radioOptions[0],
-          groupValue: currentRadio,
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                currentRadio = value.toString();
-              });
-            }
-          },
-        ),
-      ),
-      Flexible(
-        flex: 1,
-        child: RadioListTile(
-          title: Text(radioOptions[1]),
-          value: radioOptions[1],
-          groupValue: currentRadio,
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                currentRadio = value.toString();
-              });
-            }
-          },
-        ),
-      ),
-    ],
-  );
 }

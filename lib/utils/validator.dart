@@ -29,7 +29,7 @@ class Validator {
   }
 
   static String? confirmPassword(String? password, String? confirmPasswrd) {
-    print('confirmPasswrd $confirmPasswrd');
+   
     if (confirmPasswrd == null || confirmPasswrd.isEmpty) {
       return 'Missing Confirm Password';
     } else if (password != confirmPasswrd) {
