@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_demo_app/providers/form_provider.dart';
 import 'package:my_demo_app/services/api_services.dart';
+import 'package:provider/provider.dart';
 
-class DropDown extends StatelessWidget {
-  const DropDown({super.key});
+class CountryDropDown extends StatelessWidget {
+  const CountryDropDown({super.key});
 
   Future<List<String>?> fetchCountries() async {
     final response = await ApiServices.fetchCountries();
@@ -24,6 +26,11 @@ class DropDown extends StatelessWidget {
             label: Text('Select a Country'),
             width: screenWidth,
             enableFilter: true,
+            onSelected: (value) {
+              if (value != null) {
+                context.read<FormProvider>().setCountry(value);
+              }
+            },
             dropdownMenuEntries:
                 snapshot.data!
                     .map(

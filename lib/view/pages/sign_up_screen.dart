@@ -6,7 +6,7 @@ import 'package:my_demo_app/theme/color_palette.dart';
 import 'package:my_demo_app/utils/validator.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
-import 'package:my_demo_app/view/widgets/drop_down.dart';
+import 'package:my_demo_app/view/widgets/country_drop_down.dart';
 import 'package:my_demo_app/view/widgets/radio_button_section.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
@@ -24,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
- 
+
   bool checkValue = false;
 
   @override
@@ -40,7 +40,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
@@ -115,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: emailController,
                       validator: (email) => Validator.emailValidation(email),
                     ),
-                    DropDown(),
+                    CountryDropDown(),
                     AuthField(
                       hintText: 'Password',
                       controller: passwordController,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo_app/constants/app_texts.dart';
-import 'package:my_demo_app/providers/country_provider.dart';
 import 'package:my_demo_app/providers/form_provider.dart';
 import 'package:my_demo_app/routes/route_names.dart';
 import 'package:my_demo_app/theme/app_theme.dart';
@@ -19,11 +18,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => FormProvider()),
-        ChangeNotifierProvider(create: (context) => CountryProvider()),
-      ],
+    return ChangeNotifierProvider(
+      create: (context) => FormProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: AppTexts.appName,
