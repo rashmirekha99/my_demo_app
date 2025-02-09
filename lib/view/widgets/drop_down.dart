@@ -1,40 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo_app/constants/app_styles.dart';
+import 'package:my_demo_app/constants/app_texts.dart';
+import 'package:my_demo_app/providers/country_provider.dart';
 import 'package:my_demo_app/providers/form_provider.dart';
-import 'package:my_demo_app/services/api_services.dart';
-import 'package:my_demo_app/utils/snack_bar.dart';
+import 'package:my_demo_app/theme/color_palette.dart';
 import 'package:my_demo_app/utils/validator.dart';
 import 'package:provider/provider.dart';
 
-class CountryDropDown extends StatelessWidget {
+class CountryDropDown extends StatefulWidget {
   const CountryDropDown({super.key});
 
-  Future<List<String>?> fetchCountries() async {
-    final response = await ApiServices.fetchCountries();
-    return response;
+  @override
+  State<CountryDropDown> createState() => _CountryDropDownState();
+}
+
+class _CountryDropDownState extends State<CountryDropDown> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final countryProvider = context.read<CountryProvider>();
+      if (countryProvider.countries == null) {
+        countryProvider.fetchCountries();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    return FutureBuilder(
-      future: fetchCountries(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return _defaultDropDown(screenWidth, 'Loading...');
-        } else if (snapshot.hasError) {
-          showSnackBar(context, snapshot.error.toString());
-          return _defaultDropDown(screenWidth, 'No data');
-        } else if (snapshot.hasData) {
+    return Consumer<CountryProvider>(
+      builder: (context, data, child) {
+        if (data.isLoading) {
+          return _defaultDropDown(screenWidth, AppTexts.loadingText);
+        } else if (data.countries != null) {
           return SizedBox(
             width: screenWidth,
             child: DropdownButtonFormField<String>(
+              dropdownColor: ColorPalette.backgroundColor,
               isExpanded: true,
               decoration: AppStyles.textFormFieldStyle,
-              hint: Text('Select Country'),
+              hint: Text(AppTexts.selectCountry),
               validator: (value) => Validator.emptyValidation(value),
               items:
-                  snapshot.data!
+                  data.countries!
                       .map(
                         (country) => DropdownMenuItem(
                           value: country,
@@ -50,7 +59,7 @@ class CountryDropDown extends StatelessWidget {
             ),
           );
         } else {
-          return _defaultDropDown(screenWidth, 'No Data');
+          return _defaultDropDown(screenWidth, AppTexts.noData);
         }
       },
     );
@@ -61,13 +70,21 @@ class CountryDropDown extends StatelessWidget {
       width: screenWidth,
       child: DropdownButtonFormField<String>(
         isExpanded: true,
-
+        dropdownColor: ColorPalette.backgroundColor,
         decoration: AppStyles.textFormFieldStyle,
-        hint: Text('Select Country'),
+        hint: Text(AppTexts.selectCountry),
         validator: (value) => Validator.emptyValidation(value),
         onChanged: (value) {},
         items: [
-          DropdownMenuItem(value: null, enabled: false, child: Text(status)),
+          DropdownMenuItem(
+            alignment: AlignmentDirectional.center,
+            value: null,
+            enabled: false,
+            child: Text(
+              status,
+              style: TextStyle(color: ColorPalette.shadowColor),
+            ),
+          ),
         ],
       ),
     );

@@ -8,7 +8,7 @@ import 'package:my_demo_app/utils/validator.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
 import 'package:my_demo_app/view/widgets/check_box.dart';
-import 'package:my_demo_app/view/widgets/drop_down.dart.dart';
+import 'package:my_demo_app/view/widgets/drop_down.dart';
 import 'package:my_demo_app/view/widgets/radio_button_section.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
@@ -122,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           controller: emailController,
           validator: (email) => Validator.emailValidation(email),
         ),
-        
+
         CountryDropDown(),
         AuthField(
           hintText: 'Password',
