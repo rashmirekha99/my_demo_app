@@ -8,6 +8,7 @@ import 'package:my_demo_app/utils/show_snack_bar.dart';
 import 'package:my_demo_app/utils/validator.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
+import 'package:my_demo_app/view/widgets/auth_field_password.dart';
 import 'package:my_demo_app/view/widgets/check_box.dart';
 import 'package:my_demo_app/view/widgets/drop_down.dart';
 import 'package:my_demo_app/view/widgets/phone_field.dart';
@@ -99,12 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
 
         CountryDropDown(),
-        AuthField(
-          hintText: 'Password',
-          controller: passwordController,
-          isObscureTExt: true,
-          validator: (pswrd) => Validator.passwordValidator(pswrd),
-        ),
+        AuthFieldPassword(hintText: 'Password', controller: passwordController),
         AuthField(
           hintText: 'Confirm Password',
           controller: confirmPasswordController,
@@ -127,8 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 } else {
                   return showSnackBar(
                     context,
-                    message:
-                       AppTexts.termsConditionErrorMsg ,
+                    message: AppTexts.termsConditionErrorMsg,
                     color: ColorPalette.textFieldErrorBorderColor,
                   );
                 }

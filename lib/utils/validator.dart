@@ -4,10 +4,13 @@ import 'package:phone_form_field/phone_form_field.dart';
 
 class Validator {
   static String? passwordValidator(String? password) {
+    RegExp reg = RegExp(
+      r'(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-!@#$%^&*+])[A-Za-z\d\-!@#$%^&*+]{8,30}$)',
+    );
     if (password == null || password.isEmpty) {
       return 'Password is Missing';
-    } else if (password.length < 6) {
-      return 'Password should be more than 6 characters ';
+    } else if (!reg.hasMatch(password)) {
+      return 'Invalid Password';
     }
     return null;
   }
