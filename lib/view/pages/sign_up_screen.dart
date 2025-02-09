@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo_app/constants/app_style_sizes.dart';
 import 'package:my_demo_app/constants/app_texts.dart';
+import 'package:my_demo_app/providers/form_provider.dart';
 import 'package:my_demo_app/routes/route_names.dart';
 import 'package:my_demo_app/theme/color_palette.dart';
+import 'package:my_demo_app/utils/show_snack_bar.dart';
 import 'package:my_demo_app/utils/validator.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
@@ -10,6 +12,7 @@ import 'package:my_demo_app/view/widgets/check_box.dart';
 import 'package:my_demo_app/view/widgets/drop_down.dart';
 import 'package:my_demo_app/view/widgets/phone_field.dart';
 import 'package:my_demo_app/view/widgets/radio_button_section.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -116,8 +119,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         AuthButton(
           onpress: () {
             if (_formKey.currentState != null) {
+              final checkBoxValue = context.read<FormProvider>().checBoxValue;
+
               if (_formKey.currentState!.validate()) {
-                Navigator.popAndPushNamed(context, RouteNames.loginScreen);
+                if (checkBoxValue) {
+                  Navigator.popAndPushNamed(context, RouteNames.loginScreen);
+                } else {
+                  return showSnackBar(
+                    context,
+                    message:
+                       AppTexts.termsConditionErrorMsg ,
+                    color: ColorPalette.textFieldErrorBorderColor,
+                  );
+                }
               }
             }
           },

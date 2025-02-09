@@ -9,6 +9,7 @@ class PhoneField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PhoneFormField(
+    
       decoration: AppStyles.textFormFieldStyle,
       initialValue: PhoneNumber.parse('+94'),
       validator: Validator.mobilePhoneValidator(context),

@@ -7,5 +7,6 @@ class AppTexts {
   static const String loadingText = 'Loading...';
   static const String noData = 'No Data';
   static const String selectCountry = 'Select Country';
-
+  static const String termsConditionErrorMsg =
+      'You must agree to the terms and conditions to proceed.';
 }
