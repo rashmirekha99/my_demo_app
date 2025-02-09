@@ -18,19 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => FormProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: AppTexts.appName,
-        theme: AppTheme.appLightTheme,
-        home: const SplashScreen(),
-        routes: {
-          RouteNames.loginScreen: (context) => LoginScreen(),
-          RouteNames.signUpScreen: (context) => SignUpScreen(),
-          RouteNames.homeScreen: (context) => HomeScreen(),
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: AppTexts.appName,
+      theme: AppTheme.appLightTheme,
+      home: const SplashScreen(),
+      routes: {
+        RouteNames.loginScreen: (context) => LoginScreen(),
+        RouteNames.signUpScreen:
+            (context) => ChangeNotifierProvider(
+              create: (context) => FormProvider(),
+              child: SignUpScreen(),
+            ),
+        RouteNames.homeScreen: (context) => HomeScreen(),
+      },
     );
   }
 }

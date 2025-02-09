@@ -1,4 +1,6 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 
 class Validator {
   static String? passwordValidator(String? password) {
@@ -36,5 +38,15 @@ class Validator {
       return 'Confirm Password doesn\'t match';
     }
     return null;
+  }
+
+  static PhoneNumberInputValidator? getValidator(BuildContext context) {
+    List<PhoneNumberInputValidator> validators = [];
+    // if (mobileOnly) {
+    //   validators.add(PhoneValidator.validMobile(context));
+    // } else {
+      validators.add(PhoneValidator.valid(context));
+    // }
+    return validators.isNotEmpty ? PhoneValidator.compose(validators) : null;
   }
 }

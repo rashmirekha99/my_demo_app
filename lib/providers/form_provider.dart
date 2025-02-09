@@ -3,10 +3,10 @@ import 'package:my_demo_app/constants/gender_enum.dart';
 
 class FormProvider extends ChangeNotifier {
   Gender _gender = Gender.male;
-  String _country = '';
+  String? _country ;
   bool _checkBoxValue = false;
   Gender get gender => _gender;
-  String get country => _country;
+  String? get country => _country;
   bool get checBoxValue => _checkBoxValue;
   void setGender(Gender gender) {
     if (gender != _gender) {
@@ -15,7 +15,7 @@ class FormProvider extends ChangeNotifier {
     }
   }
 
-  void setCountry(String country) {
+  void setCountry(String? country) {
     if (country != _country) {
       _country = country;
     }
