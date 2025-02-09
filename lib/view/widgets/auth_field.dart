@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo_app/constants/app_styles.dart';
 
-class AuthField extends StatelessWidget {
+class AuthField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isObscureTExt;
@@ -17,20 +17,34 @@ class AuthField extends StatelessWidget {
   });
 
   @override
+  State<AuthField> createState() => _AuthFieldState();
+}
+
+class _AuthFieldState extends State<AuthField> {
+  bool isVisible = false;
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      obscureText: isObscureTExt,
+      controller: widget.controller,
+      obscureText: !isVisible,
       decoration: AppStyles.textFormFieldStyle.copyWith(
-        hintText: 'Enter your $hintText',
-        labelText: hintText,
-        // suffixIcon: Visibility(
-        //   visible: isObscureTExt,
-        //   child: IconButton(onPressed: null, icon: Icon(Icons.remove_red_eye)),
-        // ),
+        hintText: 'Enter your ${widget.hintText}',
+        labelText: widget.hintText,
+        suffixIcon:
+            widget.isObscureTExt
+                ? IconButton(
+                  icon: Icon(
+                    isVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isVisible = !isVisible;
+                    });
+                  },
+                )
+                : null,
       ),
-      validator: validator,
-      
+      validator: widget.validator,
     );
   }
 }

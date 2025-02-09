@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo_app/constants/app_styles.dart';
-import 'package:my_demo_app/providers/form_provider.dart';
 import 'package:my_demo_app/providers/password_provider.dart';
 import 'package:my_demo_app/utils/validator.dart';
 import 'package:provider/provider.dart';
 
-class AuthFieldPassword extends StatelessWidget {
+class AuthFieldPassword extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isObscureTExt;
@@ -19,6 +18,13 @@ class AuthFieldPassword extends StatelessWidget {
   });
 
   @override
+  State<AuthFieldPassword> createState() => _AuthFieldPasswordState();
+}
+
+class _AuthFieldPasswordState extends State<AuthFieldPassword> {
+  bool isVisible = false;
+
+  @override
   Widget build(BuildContext context) {
     return Selector<PasswordProvider, String>(
       selector: (context, provider) => provider.passwordHelperText,
@@ -26,15 +32,21 @@ class AuthFieldPassword extends StatelessWidget {
         return Column(
           children: [
             TextFormField(
-              controller: controller,
-              obscureText: true,
+              controller: widget.controller,
+              obscureText: !isVisible,
               decoration: AppStyles.textFormFieldStyle.copyWith(
-                hintText: 'Enter your $hintText',
-                labelText: hintText,
-                // suffixIcon: Visibility(
-                //   visible: isObscureTExt,
-                //   child: IconButton(onPressed: null, icon: Icon(Icons.remove_red_eye)),
-                // ),
+                hintText: 'Enter your ${widget.hintText}',
+                labelText: widget.hintText,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    isVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isVisible = !isVisible;
+                    });
+                  },
+                ),
               ),
               onChanged:
                   (value) => context
