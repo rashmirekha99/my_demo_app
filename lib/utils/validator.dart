@@ -31,7 +31,6 @@ class Validator {
   }
 
   static String? confirmPassword(String? password, String? confirmPasswrd) {
-   
     if (confirmPasswrd == null || confirmPasswrd.isEmpty) {
       return 'Missing Confirm Password';
     } else if (password != confirmPasswrd) {
@@ -40,13 +39,14 @@ class Validator {
     return null;
   }
 
-  static PhoneNumberInputValidator? getValidator(BuildContext context) {
+  static PhoneNumberInputValidator? mobilePhoneValidator(BuildContext context) {
     List<PhoneNumberInputValidator> validators = [];
-    // if (mobileOnly) {
-    //   validators.add(PhoneValidator.validMobile(context));
-    // } else {
-      validators.add(PhoneValidator.valid(context));
-    // }
+    validators.add(
+      PhoneValidator.valid(context, errorText: 'Invalid Mobile No'),
+    );
+    validators.add(
+      PhoneValidator.required(context, errorText: 'Missing Mobile No'),
+    );
     return validators.isNotEmpty ? PhoneValidator.compose(validators) : null;
   }
 }
