@@ -32,40 +32,45 @@ class _CountryDropDownState extends State<CountryDropDown> {
     return Consumer<CountryProvider>(
       builder: (context, data, child) {
         if (data.isLoading) {
-          return _defaultDropDown(screenWidth, AppTexts.loadingText);
+          return _defaultDropDown(
+            screenWidth: screenWidth,
+            items: _defaultMenuItem(AppTexts.loadingText),
+            onChanged: (v) {},
+          );
         } else if (data.countries != null) {
-          return SizedBox(
-            width: screenWidth,
-            child: DropdownButtonFormField<String>(
-              dropdownColor: ColorPalette.backgroundColor,
-              isExpanded: true,
-              decoration: AppStyles.textFormFieldStyle,
-              hint: Text(AppTexts.selectCountry),
-              validator: (value) => Validator.emptyValidation(value),
-              items:
-                  data.countries!
-                      .map(
-                        (country) => DropdownMenuItem(
-                          value: country,
-                          child: Text(country),
-                        ),
-                      )
-                      .toList(),
-              onChanged: (value) {
-                if (value != null) {
-                  context.read<FormProvider>().setCountry(value);
-                }
-              },
-            ),
+          return _defaultDropDown(
+            screenWidth: screenWidth,
+            items:
+                data.countries!
+                    .map(
+                      (country) => DropdownMenuItem(
+                        value: country,
+                        child: Text(country),
+                      ),
+                    )
+                    .toList(),
+            onChanged: (value) {
+              if (value != null) {
+                context.read<FormProvider>().setCountry(value);
+              }
+            },
           );
         } else {
-          return _defaultDropDown(screenWidth, AppTexts.noData);
+          return _defaultDropDown(
+            screenWidth: screenWidth,
+            items: _defaultMenuItem(AppTexts.noData),
+            onChanged: (v) {},
+          );
         }
       },
     );
   }
 
-  Widget _defaultDropDown(screenWidth, status) {
+  Widget _defaultDropDown({
+    required double screenWidth,
+    required List<DropdownMenuItem<String>> items,
+    required void Function(String?)? onChanged,
+  }) {
     return SizedBox(
       width: screenWidth,
       child: DropdownButtonFormField<String>(
@@ -74,19 +79,20 @@ class _CountryDropDownState extends State<CountryDropDown> {
         decoration: AppStyles.textFormFieldStyle,
         hint: Text(AppTexts.selectCountry),
         validator: (value) => Validator.emptyValidation(value),
-        onChanged: (value) {},
-        items: [
-          DropdownMenuItem(
-            alignment: AlignmentDirectional.center,
-            value: null,
-            enabled: false,
-            child: Text(
-              status,
-              style: TextStyle(color: ColorPalette.shadowColor),
-            ),
-          ),
-        ],
+        onChanged: onChanged,
+        items: items,
       ),
     );
+  }
+//nodata or loading
+  List<DropdownMenuItem<String>> _defaultMenuItem(String status) {
+    return [
+      DropdownMenuItem(
+        alignment: AlignmentDirectional.center,
+        value: null,
+        enabled: false,
+        child: Text(status, style: TextStyle(color: ColorPalette.shadowColor)),
+      ),
+    ];
   }
 }
