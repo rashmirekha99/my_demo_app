@@ -9,8 +9,7 @@ class PhoneField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PhoneFormField(
-    
-      decoration: AppStyles.textFormFieldStyle,
+      decoration: AppStyles.textFormFieldStyle.copyWith(hintText: 'Mobile No'),
       initialValue: PhoneNumber.parse('+94'),
       validator: Validator.mobilePhoneValidator(context),
       countrySelectorNavigator: const CountrySelectorNavigator.page(),

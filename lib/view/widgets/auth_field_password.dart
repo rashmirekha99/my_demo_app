@@ -32,6 +32,7 @@ class _AuthFieldPasswordState extends State<AuthFieldPassword> {
         return Column(
           children: [
             TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: widget.controller,
               obscureText: !isVisible,
               decoration: AppStyles.textFormFieldStyle.copyWith(

@@ -18,7 +18,10 @@ class RadioButtonSection extends StatelessWidget {
                     (gender) => Flexible(
                       flex: 1,
                       child: RadioListTile(
-                        title: Text(gender.name.toString().toUpperCase()),
+                        title: Text(
+                          gender.name.toString()[0].toUpperCase() +
+                              gender.name.substring(1),
+                        ),
                         value: gender,
                         groupValue: genderProviderValue,
                         onChanged: (value) {
