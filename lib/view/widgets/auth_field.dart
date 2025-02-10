@@ -28,7 +28,7 @@ class _AuthFieldState extends State<AuthField> {
       controller: widget.controller,
       obscureText: widget.isObscureTExt ? !isVisible : false,
       decoration: AppStyles.textFormFieldStyle.copyWith(
-        hintText: 'Enter your ${widget.hintText}',
+        hintText: 'Enter ${widget.hintText}',
         labelText: widget.hintText,
         suffixIcon:
             widget.isObscureTExt
@@ -45,6 +45,7 @@ class _AuthFieldState extends State<AuthField> {
                 : null,
       ),
       validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
 }

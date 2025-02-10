@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo_app/constants/app_images.dart';
 import 'package:my_demo_app/constants/app_style_sizes.dart';
-import 'package:my_demo_app/view/dialogs/exit_app_dialog.dart';
+import 'package:my_demo_app/view/widgets/app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,20 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(style: TextStyle(fontWeight: FontWeight.bold), 'Home'),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            final bool res = Navigator.canPop(context);
-            if (res) {
-              Navigator.of(context).pop();
-            }
-            dialogBox(context);
-          },
-          icon: Icon(Icons.adaptive.arrow_back),
-        ),
-      ),
+      appBar: CustomAppBar(title: 'Home'),
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: Column(

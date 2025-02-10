@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_demo_app/constants/app_style_sizes.dart';
 import 'package:my_demo_app/constants/app_texts.dart';
-import 'package:my_demo_app/providers/form_provider.dart';
-import 'package:my_demo_app/routes/route_names.dart';
+import 'package:my_demo_app/controllers/sign_up_controller.dart';
 import 'package:my_demo_app/theme/color_palette.dart';
-import 'package:my_demo_app/utils/show_snack_bar.dart';
 import 'package:my_demo_app/utils/validator.dart';
+import 'package:my_demo_app/view/widgets/app_bar.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
 import 'package:my_demo_app/view/widgets/auth_field_password.dart';
@@ -13,7 +12,6 @@ import 'package:my_demo_app/view/widgets/check_box.dart';
 import 'package:my_demo_app/view/widgets/drop_down.dart';
 import 'package:my_demo_app/view/widgets/phone_field.dart';
 import 'package:my_demo_app/view/widgets/radio_button_section.dart';
-import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -30,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -47,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final screenWidth = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: CustomAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -65,8 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget get _form => Form(
-    autovalidateMode: AutovalidateMode.onUserInteraction,
-    key: _formKey,
+    key: formKey,
     child: Column(
       mainAxisSize: MainAxisSize.max,
       spacing: AppStyleSizes.screenVerticallPAdding,
@@ -80,28 +77,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
         AuthField(
-          hintText: 'First Name',
+          hintText: AppTexts.firstName,
           controller: firstNameController,
-          validator: (fname) => Validator.emptyValidation(fname,fieldName: 'First Name'),
+          validator:
+              (fname) => Validator.emptyValidation(
+                fname,
+                fieldName: AppTexts.firstName,
+              ),
         ),
 
         AuthField(
-          hintText: 'Last Name',
+          hintText: AppTexts.lastName,
           controller: lastNAmeController,
-          validator: (lname) => Validator.emptyValidation(lname,fieldName:'Last Name' ),
+          validator:
+              (lname) => Validator.emptyValidation(
+                lname,
+                fieldName: AppTexts.lastName,
+              ),
         ),
         RadioButtonSection(),
         PhoneField(),
         AuthField(
-          hintText: 'Email',
+          hintText: AppTexts.email,
           controller: emailController,
           validator: (email) => Validator.emailValidation(email),
         ),
 
         CountryDropDown(),
-        AuthFieldPassword(hintText: 'Password', controller: passwordController),
+        AuthFieldPassword(
+          hintText: AppTexts.password,
+          controller: passwordController,
+        ),
         AuthField(
-          hintText: 'Confirm Password',
+          hintText: AppTexts.confirmPassword,
           controller: confirmPasswordController,
           isObscureTExt: true,
           validator:
@@ -113,21 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         AppCheckBox(),
         AuthButton(
           onpress: () {
-            if (_formKey.currentState != null) {
-              final checkBoxValue = context.read<FormProvider>().checBoxValue;
-
-              if (_formKey.currentState!.validate()) {
-                if (checkBoxValue) {
-                  Navigator.popAndPushNamed(context, RouteNames.loginScreen);
-                } else {
-                  return showSnackBar(
-                    context,
-                    message: AppTexts.termsConditionErrorMsg,
-                    color: ColorPalette.textFieldErrorBorderColor,
-                  );
-                }
-              }
-            }
+            SignUpController.handleSignUp(context, formKey);
           },
           buttonText: AppTexts.signUpText,
         ),

@@ -5,7 +5,7 @@ import 'package:my_demo_app/constants/app_texts.dart';
 import 'package:my_demo_app/routes/route_names.dart';
 import 'package:my_demo_app/theme/color_palette.dart';
 import 'package:my_demo_app/utils/validator.dart';
-import 'package:my_demo_app/view/dialogs/exit_app_dialog.dart';
+import 'package:my_demo_app/view/widgets/app_bar.dart';
 import 'package:my_demo_app/view/widgets/auth_button.dart';
 import 'package:my_demo_app/view/widgets/auth_field.dart';
 
@@ -30,18 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            final bool res = Navigator.canPop(context);
-            if (res) {
-              Navigator.of(context).pop();
-            }
-            dialogBox(context);
-          },
-          icon: Icon(Icons.adaptive.arrow_back),
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -49,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
               horizontal: AppStyleSizes.screenHorizontalPAdding,
             ),
             child: Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _formKey,
               child: Column(
                 spacing: 25,
@@ -67,32 +55,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   AuthField(
-                    hintText: 'User Name',
+                    hintText: AppTexts.userName,
                     controller: usernameController,
                     validator:
                         (value) => Validator.emptyValidation(
                           value,
-                          fieldName: 'User Name',
+                          fieldName: AppTexts.userName,
                         ),
                   ),
 
                   AuthField(
-                    hintText: 'Password',
+                    hintText: AppTexts.password,
                     controller: passwordController,
                     isObscureTExt: true,
                     validator:
                         (pswrd) => Validator.emptyValidation(
                           pswrd,
-                          fieldName: 'Password',
+                          fieldName: AppTexts.password,
                         ),
                   ),
 
                   AuthButton(
                     onpress: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.popAndPushNamed(
+                        Navigator.pushNamedAndRemoveUntil(
                           context,
                           RouteNames.homeScreen,
+                          ModalRoute.withName(RouteNames.homeScreen),
                         );
                       }
                     },
