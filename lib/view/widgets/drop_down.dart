@@ -36,6 +36,9 @@ class _CountryDropDownState extends State<CountryDropDown> {
             screenWidth: screenWidth,
             items: _defaultMenuItem(AppTexts.loadingText),
             onChanged: (v) {},
+            validator:
+                (value) =>
+                    Validator.emptyValidation(value, fieldName: 'Country'),
           );
         } else if (data.countries != null) {
           return _defaultDropDown(
@@ -54,12 +57,18 @@ class _CountryDropDownState extends State<CountryDropDown> {
                 context.read<FormProvider>().setCountry(value);
               }
             },
+            validator:
+                (value) =>
+                    Validator.emptyValidation(value, fieldName: 'Country'),
           );
         } else {
           return _defaultDropDown(
             screenWidth: screenWidth,
             items: _defaultMenuItem(AppTexts.noData),
             onChanged: (v) {},
+            validator:
+                (value) =>
+                    Validator.emptyValidation(value, fieldName: 'Country'),
           );
         }
       },
@@ -70,21 +79,25 @@ class _CountryDropDownState extends State<CountryDropDown> {
     required double screenWidth,
     required List<DropdownMenuItem<String>> items,
     required void Function(String?)? onChanged,
+    String? Function(String?)? validator,
   }) {
     return SizedBox(
       width: screenWidth,
       child: DropdownButtonFormField<String>(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         isExpanded: true,
         dropdownColor: ColorPalette.backgroundColor,
         decoration: AppStyles.textFormFieldStyle,
         hint: Text(AppTexts.selectCountry),
-        validator: (value) => Validator.emptyValidation(value,fieldName: 'Country'),
+        validator: validator,
+
         onChanged: onChanged,
         items: items,
       ),
     );
   }
-//nodata or loading
+
+  //nodata or loading
   List<DropdownMenuItem<String>> _defaultMenuItem(String status) {
     return [
       DropdownMenuItem(
