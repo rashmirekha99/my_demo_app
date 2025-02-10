@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Center(
-        child: Lottie.asset(repeat: false, 'assets/animations/new_logo.json'),
+        child: Lottie.asset(repeat: false, 'assets/animations/animated_logo.json'),
       ),
       nextScreen: LoginScreen(),
       splashIconSize: 450,
