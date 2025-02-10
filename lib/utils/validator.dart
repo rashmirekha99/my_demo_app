@@ -15,9 +15,9 @@ class Validator {
     return null;
   }
 
-  static String? emptyValidation(String? value) {
+  static String? emptyValidation(String? value, {required String fieldName}) {
     if (value == null || value.isEmpty) {
-      return 'Missing Value';
+      return '$fieldName is Missing';
     }
     return null;
   }
@@ -26,7 +26,7 @@ class Validator {
     if (email == null || email.isEmpty) {
       return 'Email is Missing';
     }
-    final bool isValid = EmailValidator.validate(email);
+    final bool isValid = EmailValidator.validate(email.trim());
     if (!isValid) {
       return 'Invalid Email';
     }
@@ -35,9 +35,9 @@ class Validator {
 
   static String? confirmPassword(String? password, String? confirmPasswrd) {
     if (confirmPasswrd == null || confirmPasswrd.isEmpty) {
-      return 'Missing Confirm Password';
+      return 'Confirm Password is Missing';
     } else if (password != confirmPasswrd) {
-      return 'Confirm Password doesn\'t match';
+      return 'Confirm password doesn\'t match';
     }
     return null;
   }
@@ -48,7 +48,7 @@ class Validator {
       PhoneValidator.valid(context, errorText: 'Invalid Mobile No'),
     );
     validators.add(
-      PhoneValidator.required(context, errorText: 'Missing Mobile No'),
+      PhoneValidator.required(context, errorText: 'Mobile No is Missing'),
     );
     return validators.isNotEmpty ? PhoneValidator.compose(validators) : null;
   }

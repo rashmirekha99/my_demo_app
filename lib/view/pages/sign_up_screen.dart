@@ -55,8 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppStyleSizes.screenHorizontalPAdding,
-                vertical: AppStyleSizes.screenVerticallPAdding,
-              ),
+              ).copyWith(bottom: AppStyleSizes.screenVerticallPAdding),
               child: _form,
             ),
           ),
@@ -83,13 +82,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         AuthField(
           hintText: 'First Name',
           controller: firstNameController,
-          validator: (fname) => Validator.emptyValidation(fname),
+          validator: (fname) => Validator.emptyValidation(fname,fieldName: 'First Name'),
         ),
 
         AuthField(
           hintText: 'Last Name',
           controller: lastNAmeController,
-          validator: (lname) => Validator.emptyValidation(lname),
+          validator: (lname) => Validator.emptyValidation(lname,fieldName:'Last Name' ),
         ),
         RadioButtonSection(),
         PhoneField(),

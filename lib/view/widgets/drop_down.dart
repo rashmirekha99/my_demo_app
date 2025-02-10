@@ -78,7 +78,7 @@ class _CountryDropDownState extends State<CountryDropDown> {
         dropdownColor: ColorPalette.backgroundColor,
         decoration: AppStyles.textFormFieldStyle,
         hint: Text(AppTexts.selectCountry),
-        validator: (value) => Validator.emptyValidation(value),
+        validator: (value) => Validator.emptyValidation(value,fieldName: 'Country'),
         onChanged: onChanged,
         items: items,
       ),

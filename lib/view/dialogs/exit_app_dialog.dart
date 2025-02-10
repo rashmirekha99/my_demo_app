@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_demo_app/theme/color_palette.dart';
 
-Future<void> dialogBox(BuildContext context)async {
+Future<void> dialogBox(BuildContext context) async {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog.adaptive(
+        backgroundColor: ColorPalette.backgroundColor,
         title: Text('Exit from App'),
         content: Text('You want to exit from the App'),
         actions: [

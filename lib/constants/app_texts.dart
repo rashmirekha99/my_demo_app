@@ -11,5 +11,5 @@ class AppTexts {
       'You must agree to the terms and conditions to proceed.';
 
   static const String passwordHelperText =
-      'Password Must:\n● Have minimum 8-30 Characters\n● Have both lower and uppercase letters\n● Have at least 1 number\n● Have at least 1 special character [-!@#\$%^&*+]';
+      'Password Must:\n● Have minimum 8-30 Characters\n● Have both lower and uppercase letters\n● Have at least 1 number\n● Have at least 1 special character';
 }

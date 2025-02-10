@@ -26,7 +26,7 @@ class _AuthFieldState extends State<AuthField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      obscureText: !isVisible,
+      obscureText: widget.isObscureTExt ? !isVisible : false,
       decoration: AppStyles.textFormFieldStyle.copyWith(
         hintText: 'Enter your ${widget.hintText}',
         labelText: widget.hintText,

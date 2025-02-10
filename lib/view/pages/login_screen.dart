@@ -69,14 +69,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   AuthField(
                     hintText: 'User Name',
                     controller: usernameController,
-                    validator: (value) => Validator.emptyValidation(value),
+                    validator:
+                        (value) => Validator.emptyValidation(
+                          value,
+                          fieldName: 'User Name',
+                        ),
                   ),
 
                   AuthField(
                     hintText: 'Password',
                     controller: passwordController,
                     isObscureTExt: true,
-                    validator: (pswrd) => Validator.emptyValidation(pswrd),
+                    validator:
+                        (pswrd) => Validator.emptyValidation(
+                          pswrd,
+                          fieldName: 'Password',
+                        ),
                   ),
 
                   AuthButton(
